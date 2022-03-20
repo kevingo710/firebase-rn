@@ -4,6 +4,14 @@ import {NavigationContainer} from '@react-navigation/native'
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ChatScreen from './screens/ChatScreen';
+import {decode, encode} from 'base-64'
+
+if (!global.btoa) {  global.btoa = encode }
+
+if (!global.atob) { global.atob = decode }
+
+
+
 
 const Stack = createStackNavigator();
 
