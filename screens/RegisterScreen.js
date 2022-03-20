@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Input, Button } from 'react-native-elements';
+import { StackActions } from '@react-navigation/native';
 import { auth } from '../firebase';
 
-const RegisterScreen = () => {
+
+const RegisterScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [imageURL, setImageUrl] = useState('');
+    const handleRedirect = () => {
+        navigation.navigate('Login');
+    }
     const register = () => {
         auth.createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
@@ -19,17 +24,23 @@ const RegisterScreen = () => {
                 }).then(function () {
                     // Update successful.
                     alert("usuario regsitrado correctamente")
+                    navigation.replace("Login")
                 }).catch(function (error) {
                     // An error happened.
                 });
                 // ...
+                //navigation.dispatch(StackActions.popToTop());
+                console.log('popToTop')
             })
             .catch((error) =>
 
              
                 alert(error.message)
             );
+
     }
+
+    
     return (
         <View style={styles.container}>
             <Input
@@ -63,6 +74,7 @@ const RegisterScreen = () => {
             />
 
             <Button title="register" onPress={register} style={styles.button} />
+            <Button title="login" onPress={handleRedirect} style={styles.button} />
         </View>
     )
 }
